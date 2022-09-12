@@ -1,26 +1,30 @@
-import './App.css';
-import QuestionBlock from"./components/QuestionBlock"
-import NavigationBar from "./components/NavigationBar"
-import LoginPage from './components/LoginPage';
-import { useState } from 'react';
+import "./App.css";
+import HomePage from "./components/HomePage";
+import LoginPage from "./components/LoginPage";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import LandingPage from "./components/LandingPage";
+import SignUpPage from "./components/SignUpPage";
+import { ProvideAuth } from "./methods/use-auth";
 function App() {
-  const [isLoggedIn, setisLoggedIn] = useState(false)
-  function login(){
-    setisLoggedIn(true);
-   
-  };
   return (
     <div className="App">
-          <NavigationBar/>
+      <BrowserRouter>
+        <Routes>
+          <Route exact path={"/"} element={<LandingPage />}></Route>
+          <Route path="/welcome" element={<LandingPage />}></Route>
 
-      {!isLoggedIn?
-      
-    <LoginPage fn={login}/>:
-        <>
-          <QuestionBlock></QuestionBlock>
-        </>
-      }
-
+          <Route
+            path="/home"
+            element={
+              <ProvideAuth>
+                <HomePage></HomePage>
+              </ProvideAuth>
+            }
+          ></Route>
+          <Route path="/login" element={<LoginPage fn={() => {}} />}></Route>
+          <Route path="/sign-up" element={<SignUpPage />}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
