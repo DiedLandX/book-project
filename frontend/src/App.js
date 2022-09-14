@@ -1,7 +1,7 @@
 import "./App.css";
 import HomePage from "./components/HomePage";
 import LoginPage from "./components/LoginPage";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import SignUpPage from "./components/SignUpPage";
 import { ProvideAuth } from "./methods/use-auth";
@@ -10,8 +10,16 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route exact path={"/"} element={<LandingPage />}></Route>
-          <Route path="/welcome" element={<LandingPage />}></Route>
+          <Route exact path={"/"} element={<Navigate to="/welcome" />}></Route>
+
+          <Route
+            path="/welcome"
+            element={
+              <ProvideAuth>
+                <LandingPage />
+              </ProvideAuth>
+            }
+          ></Route>
 
           <Route
             path="/home"

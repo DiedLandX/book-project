@@ -1,20 +1,22 @@
 import { ThemeProvider } from "@emotion/react";
-import { Box, createTheme, Toolbar, Typography } from "@mui/material";
+import { Box, createTheme, Toolbar, Typography, Drawer } from "@mui/material";
 import Button from "@mui/material/Button";
 import AppBar from "@mui/material/AppBar";
 import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
-function NavigationBar() {
+import { useAuth } from "../methods/use-auth";
+function NavigationBar({ toggleLogin }) {
+  let auth = useAuth();
   let theme = createTheme({
     palette: {
       primary: {
-        main: "#fafafa",
-        light: "#ffffff",
-        dark: "#c7c7c7",
+        main: "#AC7D88",
+        light: "#DEB6AB",
+        dark: "#85586F",
       },
       secondary: {
-        main: "#212121",
-        light: "#484848",
-        dark: "#000000",
+        main: "#D79771",
+        light: "#FFEBC9",
+        dark: "#B05B3B",
       },
     },
   });
@@ -23,7 +25,7 @@ function NavigationBar() {
       <AppBar
         position="absolute"
         component={"nav"}
-        sx={{ backgroundColor: "#c1c1c1" }}
+        sx={{ backgroundColor: "rgba(0,0,0,0.3)", zIndex: 1 }}
       >
         <Toolbar
           position="relative"
@@ -44,12 +46,35 @@ function NavigationBar() {
             BookGroups
           </Typography>
 
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            <Button variant="text" size="large" sx={{ color: "black" }}>
-              Login
-            </Button>
-            <Button variant="contained">Sign-up</Button>
-          </Box>
+          {auth.user ? (
+            "Logged In"
+          ) : (
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              <Button
+                variant="text"
+                size="large"
+                sx={{
+                  color: "white",
+                }}
+                onClick={() => {
+                  let classes =
+                    document.getElementById("landing-content").classList;
+                  classes.remove("bg-landing-normal");
+                  classes.add("bg-landing-blurred");
+                  toggleLogin();
+                }}
+              >
+                Login
+              </Button>
+
+              <Button
+                variant="contained"
+                sx={{ backgroundColor: theme.palette.primary.main }}
+              >
+                Sign-up
+              </Button>
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
     </ThemeProvider>

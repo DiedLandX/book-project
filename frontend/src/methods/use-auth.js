@@ -16,7 +16,7 @@ export function ProvideAuth({ children }) {
 }
 
 export function useProvideAuth() {
-  const [user, setUser] = useState(true);
+  const [user, setUser] = useState(false);
   //For now, these functions are not implementing their true purpose.
   function signIn(name, email, password) {
     let user = { name: name, email: email, password: password };
@@ -24,6 +24,7 @@ export function useProvideAuth() {
   }
   function signUp(name, email, password) {
     signIn(name, email, password);
+    setUser(true);
   }
   function signOut() {
     setUser(false);

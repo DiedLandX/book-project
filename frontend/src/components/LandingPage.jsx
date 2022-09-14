@@ -1,31 +1,36 @@
 import Button from "@mui/material/Button";
-import { useNavigate } from "react-router";
 import NavigationBar from "./NavigationBar";
 import { ThemeProvider } from "@emotion/react";
-import { Box, createTheme, Toolbar, Typography } from "@mui/material";
-
+import LoginPage from "./LoginPage";
+import { Box, createTheme, Typography } from "@mui/material";
 function LandingPage() {
-  const navigate = useNavigate();
+  function toggleLogin() {
+    let form = document.getElementById("login");
+    let str = form.style.display;
+
+    form.style.display = str == "flex" ? "none" : "flex";
+  }
   let theme = createTheme({
     palette: {
       primary: {
-        main: "#fafafa",
-        light: "#ffffff",
-        dark: "#c7c7c7",
+        main: "#AC7D88",
+        light: "#DEB6AB",
+        dark: "#85586F",
       },
       secondary: {
-        main: "#212121",
-        light: "#484848",
-        dark: "#000000",
+        main: "#D79771",
+        light: "#FFEBC9",
+        dark: "#B05B3B",
       },
     },
   });
   return (
     <ThemeProvider theme={theme}>
-      <div className="landing-bg">
-        <NavigationBar></NavigationBar>
+      <LoginPage toggleLogin={toggleLogin}></LoginPage>
+      <Box className="landing-bg">
+        <Box id="landing-content" className="bg-landing-normal">
+          <NavigationBar toggleLogin={toggleLogin}></NavigationBar>
 
-        <div className="landing-content">
           <Box display={"flex"} className="landing-helper">
             <Typography variant="h3" sx={{ fontWeight: "bold  " }}>
               Welcome to BookGroups
@@ -47,13 +52,12 @@ function LandingPage() {
               variant={"contained"}
               size="large"
               sx={{ fontSize: "28px", marginTop: "5vh" }}
-              onClick={() => navigate("/sign-up")}
             >
               Sign-Up
             </Button>
           </Box>
-        </div>
-      </div>
+        </Box>
+      </Box>
     </ThemeProvider>
   );
 }

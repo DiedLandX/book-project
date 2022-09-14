@@ -9,7 +9,7 @@
   background-size: cover;
   background-image: url("./resources/images/landingbg.jpg");
 }
-.landing-content {
+#landing-content {
   position: relative;
   display: flex;
   align-items: center;
@@ -30,10 +30,10 @@
   margin-left: auto;
   margin-right: auto;
 }
-.landing-content h4 {
+#landing-content h4 {
   margin: 0px;
 }
-.landing-content button {
+#landing-content button {
   margin-left: auto;
   margin-right: auto;
 }
@@ -45,18 +45,25 @@
   position: absolute;
   width: 100%;
 }
-nav {
-  position: absolute;
-  color: rgb(240, 255, 255);
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-}
+
 .question-container {
   margin-left: auto;
   margin-right: auto;
   height: 70vh;
 }
-
+.bg-landing-normal {
+  filter: blur(0px);
+  pointer-events: all;
+  transition: "all 1s";
+}
+#login {
+  display: none;
+}
+.bg-landing-blurred {
+  filter: blur(1.5px);
+  pointer-events: none;
+  transition: "all 1s";
+}
 .helper-box {
   display: flex;
   justify-content: center;
@@ -88,53 +95,15 @@ nav {
 }
 .login-container {
   display: flex;
-  background-color: white;
   flex-direction: column;
-  width: 30%;
-  height: 50%;
+  align-items: stretch;
+  justify-content: space-around;
   padding: 15px;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0px 0px 10px -3px black;
+  box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.679);
   border-radius: 3px;
-}
-.login-container :not(input) {
-  margin: 15px 5px 10px 5px;
-}
-.login-container input {
-  margin-left: 5px;
-  margin-right: 5px;
-  height: 7vh;
-  font-size: larger;
-}
-.login-container h1 {
-  margin-bottom: 7vh;
-}
-#sign-up-button {
-  background-color: white;
-  color: brown;
-  margin-top: 1vh;
-}
-.login-container button {
-  margin-top: 3vh;
-  height: 6vh;
-  border: none;
-  background-color: brown;
-  color: white;
-  border-radius: 3px;
-  padding: 10px;
-  font-weight: bold;
-  font-size: larger;
-  cursor: pointer;
 }
 
-.login-bg {
-  height: 100vh;
-  background-color: rgb(240, 237, 237);
-}
 .helper-container-login {
-  display: flex;
-  justify-items: center;
-  align-items: center;
-  height: 100%;
+  height: 100vh;
+  width: 100%;
 }
