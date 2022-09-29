@@ -3,7 +3,7 @@ import HomePage from "./components/HomePage";
 import LoginPage from "./components/LoginPage";
 import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
-import SignUpPage from "./components/SignUpPage";
+import SignUpModal from "./components/SignUpModal";
 import { ProvideAuth } from "./methods/use-auth";
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
             }
           ></Route>
           <Route path="/login" element={<LoginPage fn={() => {}} />}></Route>
-          <Route path="/sign-up" element={<SignUpPage />}></Route>
+          <Route path="/sign-up" element={<SignUpModal />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

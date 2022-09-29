@@ -8,14 +8,14 @@ function LandingPage() {
     let form = document.getElementById("login");
     let str = form.style.display;
 
-    form.style.display = str == "flex" ? "none" : "flex";
+    form.style.display = str === "flex" ? "none" : "flex";
   }
   let theme = createTheme({
     palette: {
       primary: {
-        main: "#AC7D88",
-        light: "#DEB6AB",
-        dark: "#85586F",
+        main: "#E4CDA7",
+        light: "#FFE6BC",
+        dark: "#C3B091",
       },
       secondary: {
         main: "#D79771",

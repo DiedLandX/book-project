@@ -11,21 +11,22 @@ function LoginPage({ toggleLogin }) {
   let theme = createTheme({
     palette: {
       primary: {
-        main: "#E4CDA7",
-        light: "#FFE6BC",
-        dark: "#C3B091",
+        main: "#AC7D88",
+        light: "#DEB6AB",
+        dark: "#85586F",
       },
       secondary: {
-        main: "#D79771",
-        light: "#FFEBC9",
-        dark: "#B05B3B",
+        main: "#B4846C",
+        light: "#E5B299",
+        dark: "#7D5A50",
       },
     },
   });
+  //TODO Render modal in LandingPage when signup is clicked
   return (
     <ThemeProvider theme={theme}>
       <Box
-        id="login"
+        id="signup"
         className="login-container"
         sx={{
           backgroundColor: "white",
@@ -40,12 +41,22 @@ function LoginPage({ toggleLogin }) {
           translate: "all 1s",
         }}
       >
-        <div className="ribbon"></div>
+        <Box
+          width={"17%"}
+          height="105%"
+          bgcolor={theme.palette.secondary.dark}
+          position="absolute"
+          sx={{
+            left: "-15%",
+            zIndex: 11,
+            borderRadius: "3px",
+          }}
+        ></Box>
         <Box
           id="close-login"
           position={"absolute"}
           display={"flex"}
-          bgcolor={theme.palette.primary.dark}
+          bgcolor={theme.palette.primary.main}
           color={"white"}
           height={"max-content"}
           sx={{
@@ -71,21 +82,23 @@ function LoginPage({ toggleLogin }) {
         <Typography
           variant="h3"
           fontWeight={"bold"}
-          color={theme.palette.secondary.main}
+          color={theme.palette.primary.dark}
         >
-          Please login
+          Please register
         </Typography>
         <TextField variant="standard" label="Username" />
+        <TextField variant="standard" type="email" label="Email" />
         <TextField variant="standard" type="password" label="Password" />
 
         <Button
           variant="contained"
           onClick={() => {
-            auth.signIn();
+            auth.signUp();
+            //fetch signup
             navigate("/home");
           }}
         >
-          Login
+          Sign-Up
         </Button>
         <Box display={"flex"}>
           <hr
@@ -123,7 +136,7 @@ function LoginPage({ toggleLogin }) {
             },
           }}
         >
-          Sign Up
+          Login
         </Button>
       </Box>
     </ThemeProvider>

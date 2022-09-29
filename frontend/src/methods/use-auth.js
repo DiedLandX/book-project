@@ -19,6 +19,22 @@ export function useProvideAuth() {
   const [user, setUser] = useState(false);
   //For now, these functions are not implementing their true purpose.
   function signIn(name, email, password) {
+    //FIXME: server does not respond with neccessary headers, can't proceed with API implementation.
+    fetch("http://localhost:8090/login", {
+      method: "POST",
+      headers: [["Content-Type", "application/json"]],
+      credentials: "include",
+      body: {
+        username: "raw",
+        password: "war",
+      },
+    })
+      .then((response) => response)
+      .then((data) => console.log(data))
+      .catch((err) => {
+        console.log(err);
+        console.log("Server Down!");
+      });
     let user = { name: name, email: email, password: password };
     setUser(user);
   }
