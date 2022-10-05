@@ -4,6 +4,7 @@
 }
 .landing-bg {
   position: relative;
+  overflow: hidden;
   height: 100vh;
   width: 100%;
   background-size: cover;
@@ -123,9 +124,7 @@ body {
   height: 4vh;
   border-radius: 5px;
 }
-#login {
-  display: none;
-}
+
 .bg-landing-blurred {
   filter: blur(1.5px);
   pointer-events: none;

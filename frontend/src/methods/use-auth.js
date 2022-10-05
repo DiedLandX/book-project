@@ -1,42 +1,48 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
-import IsLoggedIn from "../components/IsLoggedIn";
+import { useNavigate } from "react-router";
 
-const authContext = createContext();
+const AuthContext = createContext();
 
 export const useAuth = () => {
-  return useContext(authContext);
+  return useContext(AuthContext);
 };
-export function ProvideAuth({ children }) {
+export const ProvideUserInfo = ({ children }) => {
   const auth = useProvideAuth();
-  return (
-    <authContext.Provider value={auth}>
-      <IsLoggedIn> {children} </IsLoggedIn>
-    </authContext.Provider>
-  );
-}
-
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+};
 export function useProvideAuth() {
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(window.localStorage.getItem("jwt") != null);
+  const navigate = useNavigate();
+
   //For now, these functions are not implementing their true purpose.
-  function signIn(name, email, password) {
+  function signIn(name, password) {
     //FIXME: server does not respond with neccessary headers, can't proceed with API implementation.
+    console.log(name, password);
+
     fetch("http://localhost:8090/login", {
       method: "POST",
-      headers: [["Content-Type", "application/json"]],
-      credentials: "include",
-      body: {
-        username: "raw",
-        password: "war",
-      },
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: name,
+        password: password,
+      }),
     })
-      .then((response) => response)
-      .then((data) => console.log(data))
+      .then((response) => response.text())
+      .then((data) => {
+        if (data != "Invalid username or password.") {
+          window.localStorage.setItem("jwt", data);
+          setUser({ name: name });
+          navigate("/home");
+        } else {
+          console.log(data);
+          setUser(false);
+        }
+      })
       .catch((err) => {
         console.log(err);
         console.log("Server Down!");
+        setUser(false);
       });
-    let user = { name: name, email: email, password: password };
-    setUser(user);
   }
   function signUp(name, email, password) {
     signIn(name, email, password);
@@ -44,11 +50,13 @@ export function useProvideAuth() {
   }
   function signOut() {
     setUser(false);
+    window.localStorage.removeItem("jwt");
   }
   useEffect(() => {
     const unsubscribe = () => {
       if (user) {
         setUser(user);
+        console.log(user);
       } else {
         console.log(user + " set to false");
         setUser(false);

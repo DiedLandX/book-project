@@ -17,8 +17,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useAuth } from "../methods/use-auth";
 import { useState } from "react";
-function NavigationBar({ toggleLogin }) {
+function NavigationBar() {
   const [drawer, setDrawer] = useState(false);
+  function toggleLogin() {
+    let form = document.getElementById("login_bg");
+    let str = form.style.display;
+    form.style.display = str === "flex" ? "none" : "flex";
+  }
   let auth = useAuth();
   let theme = createTheme({
     palette: {

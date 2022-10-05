@@ -1,15 +1,14 @@
 import Button from "@mui/material/Button";
-import NavigationBar from "./NavigationBar";
 import { ThemeProvider } from "@emotion/react";
 import LoginPage from "./LoginPage";
 import { Box, createTheme, Typography } from "@mui/material";
 function LandingPage() {
   function toggleLogin() {
-    let form = document.getElementById("login");
+    let form = document.getElementById("login_bg");
     let str = form.style.display;
-
     form.style.display = str === "flex" ? "none" : "flex";
   }
+
   let theme = createTheme({
     palette: {
       primary: {
@@ -26,11 +25,9 @@ function LandingPage() {
   });
   return (
     <ThemeProvider theme={theme}>
-      <LoginPage toggleLogin={toggleLogin}></LoginPage>
       <Box className="landing-bg">
+        <LoginPage toggleLogin={toggleLogin}></LoginPage>;
         <Box id="landing-content" className="bg-landing-normal">
-          <NavigationBar toggleLogin={toggleLogin}></NavigationBar>
-
           <Box display={"flex"} className="landing-helper">
             <Typography variant="h3" sx={{ fontWeight: "bold  " }}>
               Welcome to BookGroups
