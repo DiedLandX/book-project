@@ -16,14 +16,18 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useAuth } from "../methods/use-auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import LoginPage from "./LoginPage";
+import SignUpModal from "./SignUpModal";
+
 function NavigationBar() {
   const [drawer, setDrawer] = useState(false);
-  function toggleLogin() {
-    let form = document.getElementById("login_bg");
-    let str = form.style.display;
-    form.style.display = str === "flex" ? "none" : "flex";
-  }
+  const [renderLogin, setRenderLogin] = useState(false);
+  const [regDisplay, setRegDisplay] = useState(false);
+
+  const toggleReg = () => {
+    setRegDisplay(!regDisplay);
+  };
   let auth = useAuth();
   let theme = createTheme({
     palette: {
@@ -78,7 +82,7 @@ function NavigationBar() {
           let classes = document.getElementById("landing-content").classList;
           classes.remove("bg-landing-normal");
           classes.add("bg-landing-blurred");
-          toggleLogin();
+          setRenderLogin(true);
         }}
       >
         Login
@@ -87,6 +91,9 @@ function NavigationBar() {
       <Button
         variant="contained"
         sx={{ backgroundColor: theme.palette.primary.main }}
+        onClick={() => {
+          toggleReg();
+        }}
       >
         Sign-up
       </Button>
@@ -116,6 +123,18 @@ function NavigationBar() {
 
   return (
     <ThemeProvider theme={theme}>
+      <LoginPage
+        show={renderLogin}
+        setIsRendered={setRenderLogin}
+        toggleReg={toggleReg}
+      />
+
+      <SignUpModal
+        show={regDisplay}
+        setRendered={setRegDisplay}
+        toggleLogin={setRenderLogin}
+      ></SignUpModal>
+
       <AppBar
         position="absolute"
         component={"nav"}

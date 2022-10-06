@@ -5,141 +5,154 @@ import { ThemeProvider } from "@emotion/react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAuth } from "../methods/use-auth";
 
-function LoginPage({ toggleLogin }) {
+function SignUpModal({ toggleLogin, setRendered, show }) {
   const navigate = useNavigate();
   const auth = useAuth();
   let theme = createTheme({
     palette: {
       primary: {
-        main: "#AC7D88",
-        light: "#DEB6AB",
-        dark: "#85586F",
+        main: "#E4CDA7",
+        light: "#FFE6BC",
+        dark: "#C3B091",
       },
       secondary: {
-        main: "#B4846C",
-        light: "#E5B299",
-        dark: "#7D5A50",
+        main: "#D79771",
+        light: "#FFEBC9",
+        dark: "#B05B3B",
       },
     },
   });
+  if (!show) {
+    return false;
+  }
   //TODO Render modal in LandingPage when signup is clicked
   return (
     <ThemeProvider theme={theme}>
       <Box
-        id="signup"
-        className="login-container"
+        position="absolute"
+        width={"100%"}
+        height={"100%"}
         sx={{
-          backgroundColor: "white",
-          position: "absolute",
-          left: "50%",
-          top: "50%",
-          transform: "translate(-50%,-50%)",
-          width: "30vw",
-          minWidth: "fit-content",
-          height: "50vh",
-          zIndex: 10,
-          translate: "all 1s",
+          bgcolor: "rgba(0,0,0,0.3)",
+          zIndex: 9,
+        }}
+        onClick={() => {
+          let classes = document.getElementById("landing-content").classList;
+          classes.remove("bg-landing-blurred");
+          classes.add("bg-landing-normal");
+          setRendered(false);
         }}
       >
         <Box
-          width={"17%"}
-          height="105%"
-          bgcolor={theme.palette.secondary.dark}
-          position="absolute"
+          id="signup"
+          className="login-container"
           sx={{
-            left: "-15%",
-            zIndex: 11,
-            borderRadius: "3px",
+            backgroundColor: "white",
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%,-50%)",
+            width: "30vw",
+            minWidth: "fit-content",
+            height: "50vh",
+            zIndex: 10,
+            translate: "all 1s",
           }}
-        ></Box>
-        <Box
-          id="close-login"
-          position={"absolute"}
-          display={"flex"}
-          bgcolor={theme.palette.primary.main}
-          color={"white"}
-          height={"max-content"}
-          sx={{
-            top: "7px",
-            left: "92%",
-            borderRadius: "50%",
-            padding: "2px",
-            cursor: "pointer",
-            "&:hover": {
-              backgroundColor: theme.palette.primary.dark,
-            },
-            transition: "all 0.3s",
-          }}
-          onClick={() => {
-            let classes = document.getElementById("landing-content").classList;
-            classes.remove("bg-landing-blurred");
-            classes.add("bg-landing-normal");
-            toggleLogin();
-          }}
+          onClick={(e) => e.stopPropagation()}
         >
-          <CloseIcon sx={{ borderRadius: "50%" }}></CloseIcon>
-        </Box>
-        <Typography
-          variant="h3"
-          fontWeight={"bold"}
-          color={theme.palette.primary.dark}
-        >
-          Please register
-        </Typography>
-        <TextField variant="standard" label="Username" />
-        <TextField variant="standard" type="email" label="Email" />
-        <TextField variant="standard" type="password" label="Password" />
-
-        <Button
-          variant="contained"
-          onClick={() => {
-            auth.signUp();
-            //fetch signup
-            navigate("/home");
-          }}
-        >
-          Sign-Up
-        </Button>
-        <Box display={"flex"}>
-          <hr
-            style={{
-              display: "inline",
-              background: "black",
-              color: "black",
-              border: "black",
-              height: "0.5px",
-              width: "40%",
+          <div className="ribbon"></div>
+          <Box
+            id="close-login"
+            position={"absolute"}
+            display={"flex"}
+            bgcolor={theme.palette.primary.dark}
+            color={"white"}
+            height={"max-content"}
+            sx={{
+              top: "7px",
+              left: "90%",
+              borderRadius: "50%",
+              padding: "2px",
+              cursor: "pointer",
+              "&:hover": {
+                backgroundColor: theme.palette.primary.dark,
+              },
+              transition: "all 0.3s",
             }}
-          />
-          <Typography align="center" display={"inline"}>
-            or
+            onClick={() => {
+              let classes =
+                document.getElementById("landing-content").classList;
+              classes.remove("bg-landing-blurred");
+              classes.add("bg-landing-normal");
+              setRendered(false);
+            }}
+          >
+            <CloseIcon sx={{ borderRadius: "50%" }}></CloseIcon>
+          </Box>
+          <Typography
+            variant="h3"
+            fontWeight={"bold"}
+            color={theme.palette.secondary.main}
+          >
+            Please register
           </Typography>
-          <hr
-            style={{
-              display: "inline",
-              background: "black",
-              height: "0.5px",
-              color: "black",
-              border: "black",
-              width: "40%",
-            }}
-          />
-        </Box>
+          <TextField variant="standard" label="Username" />
+          <TextField variant="standard" type="email" label="Email" />
+          <TextField variant="standard" type="password" label="Password" />
 
-        <Button
-          variant="text"
-          sx={{
-            color: "#000",
-            "&:hover": {
-              backgroundColor: theme.palette.primary.main,
-              color: "black",
-            },
-          }}
-        >
-          Login
-        </Button>
+          <Button
+            variant="contained"
+            onClick={(e) => {
+              //auth.signUp();TODO: No API for registring yet.
+            }}
+          >
+            Sign-Up
+          </Button>
+          <Box display={"flex"}>
+            <hr
+              style={{
+                display: "inline",
+                background: "black",
+                color: "black",
+                border: "black",
+                height: "0.5px",
+                width: "40%",
+              }}
+            />
+            <Typography align="center" display={"inline"}>
+              or
+            </Typography>
+            <hr
+              style={{
+                display: "inline",
+                background: "black",
+                height: "0.5px",
+                color: "black",
+                border: "black",
+                width: "40%",
+              }}
+            />
+          </Box>
+
+          <Button
+            variant="text"
+            sx={{
+              color: "#000",
+              "&:hover": {
+                backgroundColor: theme.palette.primary.main,
+                color: "black",
+              },
+            }}
+            onClick={() => {
+              setRendered(false);
+              toggleLogin(true);
+            }}
+          >
+            Login
+          </Button>
+        </Box>
       </Box>
     </ThemeProvider>
   );
 }
-export default LoginPage;
+export default SignUpModal;

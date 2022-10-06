@@ -1,14 +1,13 @@
 import Button from "@mui/material/Button";
 import { ThemeProvider } from "@emotion/react";
-import LoginPage from "./LoginPage";
 import { Box, createTheme, Typography } from "@mui/material";
+import { useState } from "react";
+import SignUpModal from "./SignUpModal";
 function LandingPage() {
-  function toggleLogin() {
-    let form = document.getElementById("login_bg");
-    let str = form.style.display;
-    form.style.display = str === "flex" ? "none" : "flex";
-  }
-
+  /*TODO Login and Register modals are working from the navbar, but the button in this component
+  is not hooked to the same state therefore creating a problem where i would have to duplicate code
+  I need to think about this...*/
+  const [showSignUp, setsignUp] = useState(false);
   let theme = createTheme({
     palette: {
       primary: {
@@ -25,11 +24,11 @@ function LandingPage() {
   });
   return (
     <ThemeProvider theme={theme}>
+      {showSignUp && <SignUpModal></SignUpModal>}
       <Box className="landing-bg">
-        <LoginPage toggleLogin={toggleLogin}></LoginPage>;
         <Box id="landing-content" className="bg-landing-normal">
           <Box display={"flex"} className="landing-helper">
-            <Typography variant="h3" sx={{ fontWeight: "bold  " }}>
+            <Typography variant="h3" sx={{ fontWeight: "bold" }}>
               Welcome to BookGroups
             </Typography>
             <Typography
@@ -49,6 +48,7 @@ function LandingPage() {
               variant={"contained"}
               size="large"
               sx={{ fontSize: "28px", marginTop: "5vh" }}
+              onClick={() => setsignUp(true)}
             >
               Sign-Up
             </Button>

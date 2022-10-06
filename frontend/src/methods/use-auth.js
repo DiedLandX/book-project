@@ -15,11 +15,10 @@ export function useProvideAuth() {
   const navigate = useNavigate();
 
   //For now, these functions are not implementing their true purpose.
-  function signIn(name, password) {
-    //FIXME: server does not respond with neccessary headers, can't proceed with API implementation.
+  async function signIn(name, password) {
     console.log(name, password);
 
-    fetch("http://localhost:8090/login", {
+    return fetch("http://localhost:8090/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -33,15 +32,18 @@ export function useProvideAuth() {
           window.localStorage.setItem("jwt", data);
           setUser({ name: name });
           navigate("/home");
+          return true;
         } else {
           console.log(data);
           setUser(false);
+          return false;
         }
       })
       .catch((err) => {
         console.log(err);
         console.log("Server Down!");
         setUser(false);
+        return false;
       });
   }
   function signUp(name, email, password) {

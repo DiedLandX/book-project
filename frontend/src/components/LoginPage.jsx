@@ -4,10 +4,11 @@ import { ThemeProvider } from "@emotion/react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAuth } from "../methods/use-auth";
 import { useState } from "react";
-function LoginPage({ toggleLogin }) {
+function LoginPage({ setIsRendered, show, toggleReg }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const auth = useAuth();
+
   let theme = createTheme({
     palette: {
       primary: {
@@ -22,6 +23,9 @@ function LoginPage({ toggleLogin }) {
       },
     },
   });
+  if (!show) {
+    return false;
+  }
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -29,7 +33,6 @@ function LoginPage({ toggleLogin }) {
         id="login_bg"
         width={"100%"}
         height={"100%"}
-        display={"none"}
         sx={{
           bgcolor: "rgba(0,0,0,0.3)",
           zIndex: 9,
@@ -38,7 +41,7 @@ function LoginPage({ toggleLogin }) {
           let classes = document.getElementById("landing-content").classList;
           classes.remove("bg-landing-blurred");
           classes.add("bg-landing-normal");
-          toggleLogin();
+          setIsRendered(false);
         }}
       >
         <Box
@@ -69,7 +72,7 @@ function LoginPage({ toggleLogin }) {
             height={"max-content"}
             sx={{
               top: "7px",
-              left: "92%",
+              left: "90%",
               borderRadius: "50%",
               padding: "2px",
               cursor: "pointer",
@@ -83,7 +86,7 @@ function LoginPage({ toggleLogin }) {
                 document.getElementById("landing-content").classList;
               classes.remove("bg-landing-blurred");
               classes.add("bg-landing-normal");
-              toggleLogin();
+              setIsRendered(false);
             }}
           >
             <CloseIcon sx={{ borderRadius: "50%" }}></CloseIcon>
@@ -114,7 +117,9 @@ function LoginPage({ toggleLogin }) {
           <Button
             variant="contained"
             onClick={() => {
-              auth.signIn(username, password);
+              auth
+                .signIn(username, password)
+                .then((e) => e && setIsRendered(false));
             }}
           >
             Login
@@ -153,6 +158,10 @@ function LoginPage({ toggleLogin }) {
                 backgroundColor: theme.palette.primary.main,
                 color: "black",
               },
+            }}
+            onClick={() => {
+              setIsRendered(false);
+              toggleReg();
             }}
           >
             Sign Up
