@@ -31,7 +31,7 @@ export function useProvideAuth() {
         if (data != "Invalid username or password.") {
           window.localStorage.setItem("jwt", data);
           setUser({ name: name });
-          navigate("/home");
+          navigate("/home", { replace: true });
           return true;
         } else {
           console.log(data);

@@ -4,11 +4,13 @@ import { ThemeProvider } from "@emotion/react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAuth } from "../methods/use-auth";
 import { useState } from "react";
-function LoginPage({ setIsRendered, show, toggleReg }) {
+import { useNavigate } from "react-router";
+import { useEffect } from "react";
+function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const auth = useAuth();
-
+  const navigate = useNavigate();
   let theme = createTheme({
     palette: {
       primary: {
@@ -23,9 +25,7 @@ function LoginPage({ setIsRendered, show, toggleReg }) {
       },
     },
   });
-  if (!show) {
-    return false;
-  }
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -41,7 +41,7 @@ function LoginPage({ setIsRendered, show, toggleReg }) {
           let classes = document.getElementById("landing-content").classList;
           classes.remove("bg-landing-blurred");
           classes.add("bg-landing-normal");
-          setIsRendered(false);
+          navigate("/welcome");
         }}
       >
         <Box
@@ -86,7 +86,7 @@ function LoginPage({ setIsRendered, show, toggleReg }) {
                 document.getElementById("landing-content").classList;
               classes.remove("bg-landing-blurred");
               classes.add("bg-landing-normal");
-              setIsRendered(false);
+              navigate("/welcome");
             }}
           >
             <CloseIcon sx={{ borderRadius: "50%" }}></CloseIcon>
@@ -117,9 +117,7 @@ function LoginPage({ setIsRendered, show, toggleReg }) {
           <Button
             variant="contained"
             onClick={() => {
-              auth
-                .signIn(username, password)
-                .then((e) => e && setIsRendered(false));
+              auth.signIn(username, password);
             }}
           >
             Login
@@ -160,8 +158,7 @@ function LoginPage({ setIsRendered, show, toggleReg }) {
               },
             }}
             onClick={() => {
-              setIsRendered(false);
-              toggleReg();
+              navigate("/welcome/register");
             }}
           >
             Sign Up

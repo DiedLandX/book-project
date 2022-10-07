@@ -22,9 +22,7 @@ function SignUpModal({ toggleLogin, setRendered, show }) {
       },
     },
   });
-  if (!show) {
-    return false;
-  }
+
   //TODO Render modal in LandingPage when signup is clicked
   return (
     <ThemeProvider theme={theme}>
@@ -40,7 +38,7 @@ function SignUpModal({ toggleLogin, setRendered, show }) {
           let classes = document.getElementById("landing-content").classList;
           classes.remove("bg-landing-blurred");
           classes.add("bg-landing-normal");
-          setRendered(false);
+          navigate("/welcome");
         }}
       >
         <Box
@@ -84,7 +82,7 @@ function SignUpModal({ toggleLogin, setRendered, show }) {
                 document.getElementById("landing-content").classList;
               classes.remove("bg-landing-blurred");
               classes.add("bg-landing-normal");
-              setRendered(false);
+              navigate("/welcome");
             }}
           >
             <CloseIcon sx={{ borderRadius: "50%" }}></CloseIcon>
@@ -103,7 +101,7 @@ function SignUpModal({ toggleLogin, setRendered, show }) {
           <Button
             variant="contained"
             onClick={(e) => {
-              //auth.signUp();TODO: No API for registring yet.
+              //auth.signUp();TODO: No API for registering yet.
             }}
           >
             Sign-Up
@@ -144,8 +142,7 @@ function SignUpModal({ toggleLogin, setRendered, show }) {
               },
             }}
             onClick={() => {
-              setRendered(false);
-              toggleLogin(true);
+              navigate("/welcome/login");
             }}
           >
             Login

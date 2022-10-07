@@ -16,19 +16,14 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useAuth } from "../methods/use-auth";
-import { useEffect, useState } from "react";
-import LoginPage from "./LoginPage";
-import SignUpModal from "./SignUpModal";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 
 function NavigationBar() {
   const [drawer, setDrawer] = useState(false);
-  const [renderLogin, setRenderLogin] = useState(false);
-  const [regDisplay, setRegDisplay] = useState(false);
 
-  const toggleReg = () => {
-    setRegDisplay(!regDisplay);
-  };
   let auth = useAuth();
+  let navigate = useNavigate();
   let theme = createTheme({
     palette: {
       primary: {
@@ -82,7 +77,7 @@ function NavigationBar() {
           let classes = document.getElementById("landing-content").classList;
           classes.remove("bg-landing-normal");
           classes.add("bg-landing-blurred");
-          setRenderLogin(true);
+          navigate("/welcome/login");
         }}
       >
         Login
@@ -92,7 +87,10 @@ function NavigationBar() {
         variant="contained"
         sx={{ backgroundColor: theme.palette.primary.main }}
         onClick={() => {
-          toggleReg();
+          let classes = document.getElementById("landing-content").classList;
+          classes.remove("bg-landing-normal");
+          classes.add("bg-landing-blurred");
+          navigate("/welcome/register");
         }}
       >
         Sign-up
@@ -123,18 +121,6 @@ function NavigationBar() {
 
   return (
     <ThemeProvider theme={theme}>
-      <LoginPage
-        show={renderLogin}
-        setIsRendered={setRenderLogin}
-        toggleReg={toggleReg}
-      />
-
-      <SignUpModal
-        show={regDisplay}
-        setRendered={setRegDisplay}
-        toggleLogin={setRenderLogin}
-      ></SignUpModal>
-
       <AppBar
         position="absolute"
         component={"nav"}
